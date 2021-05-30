@@ -1,0 +1,42 @@
+/**
+ * Sensibletify - A spicetify theme for Spotify that aims to improve the usability of the new Spotify UI.
+ *
+ * MIT Licensed.
+ *
+ * (c) 2021 Callum Jones
+ */
+
+/**
+ * main grid view
+ */
+
+/* remove useless text ellipsising, so album names can be read properly */
+.main-cardSubHeader-root, .main-cardHeader-text {
+	text-overflow: initial;
+	white-space: initial;
+}
+
+/* reduce grid size */
+.main-gridContainer-gridContainer {
+	grid-gap: 12px;
+}
+
+/**
+ * friend activity
+ */
+
+/* fix friend activity to be readable */
+.main-buddyFeed-activityMetadata .main-buddyFeed-artistAndTrackName {
+	flex-direction: column;
+}
+
+.main-buddyFeed-activityMetadata .main-buddyFeed-artistAndTrackName a {
+	display: block;
+	text-overflow: initial;
+	white-space: initial;
+}
+
+/* remove pointless span */
+.main-buddyFeed-activityMetadata .main-buddyFeed-artistAndTrackName span {
+	display: none;
+}
