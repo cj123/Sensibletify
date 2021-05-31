@@ -6,7 +6,7 @@ A [spicetify](https://github.com/khanhas/spicetify-cli) theme for Spotify that a
 * [x] Fix unreadable/shortened text in album view
 * [x] Make Friend Activity readable again
 * [x] Remove lazy-loading from albums view
-* [ ] Make navigation to Library items one click again
+* [x] Make navigation to Library items one click again
 * [ ] Fix scroll position not being kept when navigating back to albums view
 
 ## Installation

@@ -40,3 +40,8 @@
 .main-buddyFeed-activityMetadata .main-buddyFeed-artistAndTrackName span {
 	display: none;
 }
+
+/* hide top navbar in collections, we have our own */
+.collection-collection-tabBar {
+	display: none;
+}
