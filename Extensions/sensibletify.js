@@ -1,9 +1,17 @@
 // NAME: sensibletify
 // AUTHOR: Callum Jones
-// DESCRIPTION: Better spotify
+// DESCRIPTION: Usability tweaks and improvements to the new Spotify UI.
 
 // set this to true if you use Spotify Podcasts.
 const SHOW_PODCASTS_IN_SIDEBAR = false;
+
+// The search fix removes top navigation items. To prevent this happening on
+// some pages, you can add their paths to this exclusion list. Spicetify default apps have been added already.
+let excludePathsFromSearchFix = [
+    "/lyrics-plus",
+    "/reddit",
+    "/new-releases",
+];
 
 (function sensibletify() {
     const mainMenu = document.querySelector(".main-navBar-entryPoints");
@@ -133,7 +141,7 @@ const SHOW_PODCASTS_IN_SIDEBAR = false;
         const className = "sensibletify-search";
         const searchInput = document.querySelector("." + className);
 
-        if (path === "/search") {
+        if (excludePathsFromSearchFix.includes(path) || path === "/search") {
             console.log("[sensibletify] on search page, removing our search input");
             let ourSearch = document.querySelector(".sensibletify-search");
 
