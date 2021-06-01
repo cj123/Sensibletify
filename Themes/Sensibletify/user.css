@@ -45,3 +45,8 @@
 .collection-collection-tabBar {
 	display: none;
 }
+
+/* remove top bar content duplicate, if we've appended our search bar */
+.main-topBar-topbarContent:nth-child(2):not(.sensibletify-search) {
+	display: none;
+}
