@@ -1,4 +1,3 @@
-
 // NAME: sensibletify
 // AUTHOR: Callum Jones
 // DESCRIPTION: Better spotify
@@ -6,7 +5,7 @@
 // set this to true if you use Spotify Podcasts.
 const SHOW_PODCASTS_IN_SIDEBAR = false;
 
-(function sensibletify(){
+(function sensibletify() {
     const mainMenu = document.querySelector(".main-navBar-entryPoints");
 
     if (!Spicetify.Platform || !Spicetify.Platform.LibraryAPI || !mainMenu) {
@@ -17,7 +16,7 @@ const SHOW_PODCASTS_IN_SIDEBAR = false;
     // remove lazy loading from getAlbums.
     const getAlbums = Spicetify.Platform.LibraryAPI.getAlbums;
 
-    Spicetify.Platform.LibraryAPI.getAlbums = function(e) {
+    Spicetify.Platform.LibraryAPI.getAlbums = (e) => {
         e.limit = -1;
         e.offset = 0;
         return getAlbums.apply(Spicetify.Platform.LibraryAPI, [e]);
@@ -28,7 +27,7 @@ const SHOW_PODCASTS_IN_SIDEBAR = false;
     // remove lazy loading from getArtists.
     const getArtists = Spicetify.Platform.LibraryAPI.getArtists;
 
-    Spicetify.Platform.LibraryAPI.getArtists = function(e) {
+    Spicetify.Platform.LibraryAPI.getArtists = (e) => {
         e.limit = -1;
         e.offset = 0;
         return getArtists.apply(Spicetify.Platform.LibraryAPI, [e]);
@@ -47,7 +46,7 @@ const SHOW_PODCASTS_IN_SIDEBAR = false;
         }
     });
 
-    let addToMenu = function(name, icon, clickHandler, selected = false) {
+    let addToMenu = (name, icon, clickHandler, selected = false) => {
         const li = document.createElement("li");
         li.classList.add("main-navBar-navBarItem");
 
@@ -132,7 +131,7 @@ const SHOW_PODCASTS_IN_SIDEBAR = false;
         }
 
         const className = "sensibletify-search";
-        const searchInput = document.querySelector("."+className);
+        const searchInput = document.querySelector("." + className);
 
         if (path === "/search") {
             console.log("[sensibletify] on search page, removing our search input");
@@ -178,13 +177,50 @@ const SHOW_PODCASTS_IN_SIDEBAR = false;
     // hook navigation
     const pushHistory = Spicetify.Platform.History.push;
 
-    Spicetify.Platform.History.push = function(e, t) {
+    Spicetify.Platform.History.push = (e, t) => {
         addSearchBar(e.pathname);
 
         return pushHistory.apply(Spicetify.Platform.History, [e, t]);
     };
 
     console.log("[sensibletify] added search back everywhere");
+
+    const viewport = document.querySelector("main .os-viewport");
+
+    viewport.addEventListener('scroll', (e) => {
+        const scrollY = viewport.scrollTop;
+
+        Spicetify.Platform.History.location.scrollPosition = scrollY;
+    });
+
+    const goBack = Spicetify.Platform.History.goBack;
+
+    Spicetify.Platform.History.goBack = () => {
+        goBack.apply(Spicetify.Platform.History, []);
+
+        // do we have the scroll pos for this page?
+        let index = Spicetify.Platform.History.index;
+        let entries = Spicetify.Platform.History.entries;
+
+        if (index >= 0 && index < entries.length) {
+            const previousEntry = entries[index];
+
+            if (previousEntry.scrollPosition && previousEntry.scrollPosition > 0) {
+                scrollTo = previousEntry.scrollPosition;
+                const viewport = document.querySelector("main .os-viewport");
+
+                if (viewport.scrollHeight < previousEntry.scrollPosition) {
+                    setTimeout(() => {
+                        viewport.scrollTop = scrollTo;
+                    }, 500);
+                } else {
+                    viewport.scrollTop = scrollTo;
+                }
+            }
+        }
+    };
+
+    console.log("[sensibletify] added scroll position history");
 })();
 
 function addCSS(fileName) {

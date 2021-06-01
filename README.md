@@ -8,7 +8,7 @@ A [spicetify](https://github.com/khanhas/spicetify-cli) theme for Spotify that a
 * [x] Remove lazy-loading from albums view
 * [x] Make navigation to Library items one click again
 * [x] Add search back to more pages
-* [ ] Fix scroll position not being kept when navigating back to albums view
+* [x] Fix scroll position not being kept when navigating back to albums view
 
 ## Installation
 
