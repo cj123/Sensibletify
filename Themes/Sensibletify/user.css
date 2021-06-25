@@ -50,3 +50,20 @@
 .main-topBar-topbarContent:nth-child(2):not(.sensibletify-search) {
 	display: none;
 }
+
+/* remove rootlist divider */
+.main-rootlist-rootlistDividerContainer {
+	display: none;
+}
+
+.spicetify-playlist-list {
+	margin-top: 10px;
+}
+
+/**
+ * podcasts - comment this out if you think spotify is a podcasting platform
+ */
+
+.GlueDropTarget.GlueDropTarget--episodes {
+	display: none;
+}
