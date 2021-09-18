@@ -156,7 +156,7 @@ let excludePathsFromSearchFix = [
             return;
         }
 
-        const searchTemplate = `<div class="main-topBar-topbarContent sensibletify-search"><div class="x-searchInput-searchInput"><form role="search"><input class="x-searchInput-searchInputInput main-type-mesto" maxlength="80" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Artists, songs, or podcasts" data-testid="search-input" value=""></form><div class="x-searchInput-searchInputIconContainer"><span class="x-searchInput-searchInputSearchIcon"><svg height="24" role="img" width="24" viewBox="0 0 512 512" class="x-searchInput-searchInputIcon" aria-hidden="true"><path d="M349.714 347.937l93.714 109.969-16.254 13.969-93.969-109.969q-48.508 36.825-109.207 36.825-36.826 0-70.476-14.349t-57.905-38.603-38.603-57.905-14.349-70.476 14.349-70.476 38.603-57.905 57.905-38.603 70.476-14.349 70.476 14.349 57.905 38.603 38.603 57.905 14.349 70.476q0 37.841-14.73 71.619t-40.889 58.921zM224 377.397q43.428 0 80.254-21.461t58.286-58.286 21.461-80.254-21.461-80.254-58.286-58.285-80.254-21.46-80.254 21.46-58.285 58.285-21.46 80.254 21.46 80.254 58.285 58.286 80.254 21.461z" fill="currentColor"></path></svg></span></div></div></div>`;
+        const searchTemplate = `<div class="sensibletify-search main-topBar-topbarContent"><div class="x-searchInput-searchInput"><form role="search"><input class="x-searchInput-searchInputInput main-type-mesto" maxlength="80" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Artists, songs, or podcasts" data-testid="search-input" value=""></form><div class="x-searchInput-searchInputIconContainer"><span class="x-searchInput-searchInputSearchIcon"><svg height="24" role="img" width="24" viewBox="0 0 512 512" class="x-searchInput-searchInputIcon" aria-hidden="true"><path d="M349.714 347.937l93.714 109.969-16.254 13.969-93.969-109.969q-48.508 36.825-109.207 36.825-36.826 0-70.476-14.349t-57.905-38.603-38.603-57.905-14.349-70.476 14.349-70.476 38.603-57.905 57.905-38.603 70.476-14.349 70.476 14.349 57.905 38.603 38.603 57.905 14.349 70.476q0 37.841-14.73 71.619t-40.889 58.921zM224 377.397q43.428 0 80.254-21.461t58.286-58.286 21.461-80.254-21.461-80.254-58.286-58.285-80.254-21.46-80.254 21.46-58.285 58.285-21.46 80.254 21.46 80.254 58.285 58.286 80.254 21.461z" fill="currentColor"></path></svg></span></div></div></div>`
 
         const searchBar = document.createElement("template");
         searchBar.innerHTML = searchTemplate;
@@ -192,43 +192,6 @@ let excludePathsFromSearchFix = [
     };
 
     console.log("[sensibletify] added search back everywhere");
-
-    const viewport = document.querySelector("main .os-viewport");
-
-    viewport.addEventListener('scroll', (e) => {
-        const scrollY = viewport.scrollTop;
-
-        Spicetify.Platform.History.location.scrollPosition = scrollY;
-    });
-
-    const goBack = Spicetify.Platform.History.goBack;
-
-    Spicetify.Platform.History.goBack = () => {
-        goBack.apply(Spicetify.Platform.History, []);
-
-        // do we have the scroll pos for this page?
-        let index = Spicetify.Platform.History.index;
-        let entries = Spicetify.Platform.History.entries;
-
-        if (index >= 0 && index < entries.length) {
-            const previousEntry = entries[index];
-
-            if (previousEntry.scrollPosition && previousEntry.scrollPosition > 0) {
-                scrollTo = previousEntry.scrollPosition;
-                const viewport = document.querySelector("main .os-viewport");
-
-                if (viewport.scrollHeight < previousEntry.scrollPosition) {
-                    setTimeout(() => {
-                        viewport.scrollTop = scrollTo;
-                    }, 500);
-                } else {
-                    viewport.scrollTop = scrollTo;
-                }
-            }
-        }
-    };
-
-    console.log("[sensibletify] added scroll position history");
 })();
 
 function addCSS(fileName) {
